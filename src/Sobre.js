@@ -4,6 +4,19 @@ import './App.css';
 import Menu from './Menu';
 
 class Sobre extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { teste: '1234', value: 'hhhh' };
+
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
+    console.log(event);
+    this.setState({ value: event.target.value });
+  }
+
   render() {
     return (
       <div className="App">
@@ -19,8 +32,12 @@ class Sobre extends Component {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Exemplo de Página de Sobre
+            Exemplo de Página de Sobre {this.state.teste}
           </a>
+            <input type="text" value={this.state.value} onChange={this.handleChange} />
+            <p>
+              Value: {this.state.value}
+            </p>
         </header>
       </div>
     );
