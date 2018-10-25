@@ -14,12 +14,13 @@ class Sobre extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeID = this.handleChangeID.bind(this);
     this.getTesteFetch = this.getTesteFetch.bind(this);
+    //this.putAxios = this.putAxios.bind(this);
     //this.getTesteAxios = this.getTesteAxios.bind(this);
     this.renderItem = this.renderItem.bind(this);
   }
 
   handleChange(event) {
-    console.log(event);
+    //console.log(event);
     this.setState({ value: event.target.value });
   }
 
@@ -32,10 +33,10 @@ class Sobre extends Component {
       .then(res => res.json())
       .then(
         (result) => {
-          console.log(result);
+          //console.log(result);
         },
         (error) => {
-          console.log(error);
+          //console.log(error);
         }
       )
   }
@@ -43,18 +44,33 @@ class Sobre extends Component {
   getTesteAxios = async () => {
     try {
       const response = await axios.get(`http://localhost:4000/mysql/${this.state.id}`);
-      console.log(response.data);
+      //console.log(response.data);
       this.setState({ resultado: response.data });
 
-      console.log('state: ', this.state.resultado);
+      //console.log('state: ', this.state.resultado);
     } catch (error) {
       //console.error(error);
     }
   }
 
+  putAxios(id) {
+    try {
+      console.log('teste', id);
+    }
+    catch (error) {
+      //console.error(error);
+    }
+  }
+
   renderItem(index, key) {
-    console.log(this.state.resultado);
-    return <div key={key}>{this.state.resultado[index].nome}</div>;
+    //console.log(this.state.resultado);
+    return (
+      <div key={key}>
+        {this.state.resultado[index].nome}
+        <button key={key} onClick={this.putAxios(this.state.resultado[index].id)}>
+          Alterar {this.state.resultado[index].id}
+        </button>
+      </div>);
     //return <div key={key}>teste</div>;
   }
 
