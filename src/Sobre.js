@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import Menu from './Menu';
 import axios from 'axios';
+import ReactList from 'react-list';
 
 class Sobre extends Component {
   constructor(props) {
@@ -12,6 +13,8 @@ class Sobre extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.getTesteFetch = this.getTesteFetch.bind(this);
+    //this.getTesteAxios = this.getTesteAxios.bind(this);
+    this.renderItem = this.renderItem.bind(this);
   }
 
   handleChange(event) {
@@ -36,12 +39,18 @@ class Sobre extends Component {
     try {
       const response = await axios.get('http://localhost:4000/mysql');
       console.log(response.data);
-      this.setState({resultado: response.data});
+      this.setState({ resultado: response.data });
 
       console.log('state: ', this.state.resultado);
     } catch (error) {
       //console.error(error);
     }
+  }
+
+  renderItem(index, key) {
+    console.log(this.state.resultado);
+    return <div key={key}>{this.state.resultado[index].nome}</div>;
+    //return <div key={key}>teste</div>;
   }
 
   render() {
@@ -67,9 +76,13 @@ class Sobre extends Component {
 
           <button onClick={this.getTesteFetch}>Buscar API Fetch</button>
           <button onClick={this.getTesteAxios}>Buscar API Axios</button>
-          <p>
-            {/* Resultado: {this.state.resultado[0].nome} */}
-          </p>
+          <div style={{ overflow: 'auto', maxHeight: 400 }}>
+            <ReactList
+              itemRenderer={this.renderItem}
+              length={this.state.resultado.length}
+              type='uniform'
+            />
+          </div>
         </header>
       </div>
     );
