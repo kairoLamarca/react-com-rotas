@@ -16,8 +16,8 @@ class Sobre extends Component {
     this.getTesteFetch = this.getTesteFetch.bind(this);
     //this.putAxios = this.putAxios.bind(this);
     //this.getTesteAxios = this.getTesteAxios.bind(this);
-    this.renderItem = this.renderItem.bind(this);
-    this.delete = this.delete.bind(this);
+    //this.renderItem = this.renderItem.bind(this);
+    //this.delete = this.delete.bind(this);
   }
 
   handleChange(event) {
@@ -112,10 +112,14 @@ class Sobre extends Component {
     );
   }
 
-  delete(id) {          // How that function knows id of item that need to delete and how to delete item?
+  async delete(id) {          // How that function knows id of item that need to delete and how to delete item?
     //this.setState(this.item.id)
 
     console.log(id);
+
+    await this.setState({ id: id });
+
+    this.getTesteAxios();
   }
 }
 
