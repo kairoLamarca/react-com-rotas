@@ -4,12 +4,19 @@ import './App.css';
 import Menu from './Menu';
 import axios from 'axios';
 import ReactList from 'react-list';
+import Select from 'react-select';
+
+const options = [
+  { value: 'chocolate', label: 'Chocolate' },
+  { value: 'strawberry', label: 'Strawberry' },
+  { value: 'vanilla', label: 'Vanilla' }
+];
 
 class Sobre extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { teste: '1234', value: 'hhhh', resultado: [], id: '' };
+    this.state = { teste: '1234', value: 'hhhh', resultado: [], id: '', selectedOption: 'select' };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeID = this.handleChangeID.bind(this);
@@ -75,7 +82,19 @@ class Sobre extends Component {
     //return <div key={key}>teste</div>;
   }
 
+  // handleChangeSelect = (selectedOption) => {
+  //   this.setState({ selectedOption });
+  //   console.log(`Option selected:`, selectedOption);
+  // }
+
+  changeSelect = (event) => {
+    this.setState({ selectedOption: event.target.value });
+    console.log(`Option selected:`, event.target.value);
+  }
+
   render() {
+    // const { selectedOption } = this.state;
+
     return (
       <div className="App">
         <Menu />
@@ -107,6 +126,19 @@ class Sobre extends Component {
             /> */}
             <TodoList items={this.state.resultado} _handleDelete={this.delete.bind(this)} />
           </div>
+          {/* <Select
+            value={selectedOption}
+            onChange={this.handleChangeSelect}
+            options={options}
+          /> */}
+          <select id="lang" onChange={this.changeSelect} value={this.state.selectedOption}>
+            <option value="select">Select</option>
+            <option value="Java">Java</option>
+            <option value="C++">C++</option>
+            {this.state.resultado.map(item => (
+              <option key={item.id} value={item.id}>{item.nome}</option>
+            ))}
+          </select>
         </header>
       </div>
     );
