@@ -17,6 +17,7 @@ class Sobre extends Component {
     //this.putAxios = this.putAxios.bind(this);
     //this.getTesteAxios = this.getTesteAxios.bind(this);
     this.renderItem = this.renderItem.bind(this);
+    this.delete = this.delete.bind(this);
   }
 
   handleChange(event) {
@@ -99,14 +100,38 @@ class Sobre extends Component {
           <input type="text" value={this.state.id} onChange={this.handleChangeID} />
           <button onClick={this.getTesteAxios}>Buscar API Axios</button>
           <div style={{ overflow: 'auto', maxHeight: 400 }}>
-            <ReactList
+            {/* <ReactList
               itemRenderer={this.renderItem}
               length={this.state.resultado.length}
               type='uniform'
-            />
+            /> */}
+            <TodoList items={this.state.resultado} _handleDelete={this.delete.bind(this)} />
           </div>
         </header>
       </div>
+    );
+  }
+
+  delete(id) {          // How that function knows id of item that need to delete and how to delete item?
+    //this.setState(this.item.id)
+
+    console.log(id);
+  }
+}
+
+class TodoList extends Component {
+
+  _handleDelete(id) {
+    this.props._handleDelete(id);
+  }
+
+  render() {
+    return (
+      <ul>
+        {this.props.items.map(item => (
+          <li key={item.id}>{item.nome}<button onClick={this._handleDelete.bind(this, item.id)}>Delete</button></li>
+        ))}
+      </ul>
     );
   }
 }
