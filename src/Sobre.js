@@ -9,9 +9,10 @@ class Sobre extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { teste: '1234', value: 'hhhh', resultado: [] };
+    this.state = { teste: '1234', value: 'hhhh', resultado: [], id: '' };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleChangeID = this.handleChangeID.bind(this);
     this.getTesteFetch = this.getTesteFetch.bind(this);
     //this.getTesteAxios = this.getTesteAxios.bind(this);
     this.renderItem = this.renderItem.bind(this);
@@ -20,6 +21,10 @@ class Sobre extends Component {
   handleChange(event) {
     console.log(event);
     this.setState({ value: event.target.value });
+  }
+
+  handleChangeID(event) {
+    this.setState({ id: event.target.value });
   }
 
   getTesteFetch() {
@@ -37,7 +42,7 @@ class Sobre extends Component {
 
   getTesteAxios = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/mysql');
+      const response = await axios.get(`http://localhost:4000/mysql/${this.state.id}`);
       console.log(response.data);
       this.setState({ resultado: response.data });
 
@@ -75,6 +80,7 @@ class Sobre extends Component {
           </p>
 
           <button onClick={this.getTesteFetch}>Buscar API Fetch</button>
+          <input type="text" value={this.state.id} onChange={this.handleChangeID} />
           <button onClick={this.getTesteAxios}>Buscar API Axios</button>
           <div style={{ overflow: 'auto', maxHeight: 400 }}>
             <ReactList
